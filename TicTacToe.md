@@ -2,11 +2,14 @@
 # Tic-Tac-Toe in FP Scala
 
 
-It tends to be hard to understand functional concepts without a context. And what’s a better setting than a simple game of TicTacToe. A quick reminder: TicTacToe is a game where you have a board of 9 squares, and you and your opponent are trying to fill the board with X’s or O’s in specific configurations. You can learn more about the rules and strategies on Wikipedia [https://en.wikipedia.org/wiki/Tic-tac-toe](https://en.wikipedia.org/wiki/Tic-tac-toe).
+It tends to be hard to understand functional concepts without a context. And what’s a better setting than a simple game 
+of TicTacToe. A quick reminder: TicTacToe is a game where you have a board of 9 squares, and you and your opponent are 
+trying to fill the board with X’s or O’s in specific configurations. You can learn more about the rules and strategies 
+on Wikipedia [https://en.wikipedia.org/wiki/Tic-tac-toe](https://en.wikipedia.org/wiki/Tic-tac-toe).
 
 ## Game Algebra
 
-Let’s start by defining our basic building block of the game as an Algebraic Data Tyoe (commonly known as an ADT):
+Let’s start by defining our basic building block of the game as an Algebraic Data Type (commonly known as an ADT):
 
 ```scala
 sealed trait Square
@@ -15,7 +18,9 @@ object X extends Square
 object O extends Square
 ```
 
-If we imagine the board at the beginning of the game, it can also be empty, so we need a notion of an empty **Square**. We can represent it with `Option[Square]` . Where `Some[Square]` is a Square with a set value and `None: Option[Square]` is a square with an empty value. A *Row* would look like this:
+If we imagine the board at the beginning of the game, it can also be empty, so we need a notion of an empty **Square**. 
+We can represent it with `Option[Square]` . Where `Some[Square]` is a Square with a set value and `None: Option[Square]` 
+is a square with an empty value. A *Row* would look like this:
 
 ```scala
 case class Row(col1: Option[Square], col2: Option[Square], col3: Option[Square])
@@ -27,7 +32,8 @@ As mentioned before our **Game** has nine squares, so 3 x 3 squares. So the game
 case class Game(row1: Row, row2: Row, row3: Row)
 ```
 
-The only thing missing for game-related logic is to define a way to talk about a **Square** position on the game board. So let’s define the concept of **Coordinates**.
+The only thing missing for game-related logic is to define a way to talk about a **Square** position on the game board. 
+So let’s define the concept of **Coordinates**.
 
 ```scala
 sealed trait ColumnCoordinate
@@ -45,7 +51,8 @@ case object Row3 extends RowCoordinate
 case class Coordinate(column: ColumnCoordinate, row: RowCoordinate)
 ```
 
-Because we will use either **X** or **O,** our decision also needs to have information about the **Square**. We can define a **Move** in the game as:
+Because we will use either **X** or **O,** our decision also needs to have information about the **Square**. 
+We can define a **Move** in the game as:
 
 ```scala
 case class Move(square: Square, coordinates: Coordinate)
@@ -53,7 +60,9 @@ case class Move(square: Square, coordinates: Coordinate)
 
 ## Game Mechanics
 
-So now we have all of our building blocks, and we can start working on game mechanics. One of the first things we can start working on is the ability to progress in the game. Let’s describe our move function by taking into account that we want only to fill non-empty squares:
+So now we have all of our building blocks, and we can start working on game mechanics. One of the first things we can 
+start working on is the ability to progress in the game. Let’s describe our move function by taking into account that 
+we want only to fill non-empty squares:
 
 ```scala
 def move(game: Game, move: Move): Option[Game] = {
@@ -73,7 +82,9 @@ def move(game: Game, move: Move): Option[Game] = {
 }
 ```
 
-Now let’s start thinking about how can we complete the game. There are two basic ways. Either someone **wins,** or there is a **draw** when the board is full. Let’s start from **draw** case because it only requires us to know if we can make any more moves. To figure that out, we need to know if each *Row* in the **Game** is full.
+Now let’s start thinking about how can we complete the game. There are two basic ways. Either someone **wins,** or 
+there is a **draw** when the board is full. Let’s start from **draw** case because it only requires us to know if we 
+can make any more moves. To figure that out, we need to know if each *Row* in the **Game** is full.
 
 ```scala
 def full(row: Row): Boolean = Seq(row.col1, row.col2, row.col3).forall(_.isDefined)
@@ -81,7 +92,8 @@ def full(row: Row): Boolean = Seq(row.col1, row.col2, row.col3).forall(_.isDefin
 def full(game: Game): Boolean = Seq(game.row1, game.row2, game.row3).forall(Row.full)
 ```
 
-The winning case is a bit more involved. It requires us to test if either one of the rows/columns/diagonals has been filled with the same symbol:
+The winning case is a bit more involved. It requires us to test if either one of the rows/columns/diagonals 
+has been filled with the same symbol:
 
 ```scala
 def winner(game: Game): Option[Square] = {
@@ -129,7 +141,8 @@ def winner(game: Game): Option[Square] = {
 }
 ```
 
-The last few bits of mechanics we need is a way to have an empty game ready quickly, and a list of all the possibles moves:
+The last few bits of mechanics we need is a way to have an empty game ready quickly, 
+and a list of all the possibles moves:
 
 ```scala
 val empty = Game(
@@ -146,7 +159,8 @@ val combinations: List[Coordinate] = for {
 
 ## Displaying the game
 
-To be able to interact with the **Console**, we need a way to encode our **game** into a String. Let's use TypeClasses for that:
+To be able to interact with the **Console**, we need a way to encode our **game** into a String. 
+Let's use TypeClasses for that:
 
 ```scala
 trait Encoder[T] {
@@ -286,7 +300,8 @@ def run[F[_]: Monad](implicit console: Console[F], applicative: Applicative[F]):
     _ <- printLine(displayGameOnConsole(currentGame))
     _ <- printLine(Text.nextMove(square))
     _ <- printLine(Text.validInputs)
-    nextStage <- retry(readLine.map(Decoder[Coordinate].decode).map(_.flatMap(coordinates => game.move(currentGame, Move(square, coordinates)))))
+    nextStage <- retry(readLine.map(Decoder[Coordinate].decode).map(_.flatMap(coordinates => game.move(currentGame, 
+      Move(square, coordinates)))))
   } yield nextStage
 
   // we loop the game until someone wins or there is a draw
@@ -331,10 +346,15 @@ override def run(args: List[String]): IO[ExitCode] = {
 
 ## Conclusion
 
-When learning any programming concept, it’s common to look for simple problems to solve that would gradually increase in complexity. You might try [Project Euler](https://projecteuler.net/), [HackerRank](https://www.hackerrank.com/), [Codility](https://app.codility.com/programmers/) or [Exercism](https://exercism.io/tracks). If you reach a plateau, try building some simple games you love like [Chess](https://www.youtube.com/watch?v=ScS8Q32lMxA), TicTacToe, or [Hangman](https://en.wikipedia.org/wiki/Hangman) (I'm gonna work on this soon!).
+When learning any programming concept, it’s common to look for simple problems to solve that would gradually increase 
+in complexity. You might try [Project Euler](https://projecteuler.net/), [HackerRank](https://www.hackerrank.com/), 
+[Codility](https://app.codility.com/programmers/) or [Exercism](https://exercism.io/tracks). 
+If you reach a plateau, try building some simple games you love like [Chess](https://www.youtube.com/watch?v=ScS8Q32lMxA), 
+TicTacToe, or [Hangman](https://en.wikipedia.org/wiki/Hangman) (I'm gonna work on this soon!).
 
 ## Resources
 
-* [Source code](https://github.com/dmarticus/scala-games/tree/master/src/main/scala/games/TicTacToe) — Git repository with all the code + tests
+* [Source code](https://github.com/dmarticus/scala-games/tree/master/src/main/scala/games/TicTacToe) — Git repository 
+with all the code + tests
 
 * Inspiration for this writeup is the [**FP to the Max**](https://www.youtube.com/watch?v=sxudIMiOo68) video tutorial
