@@ -3,5 +3,5 @@
 Working on creating examples of simple games in FP.
 
 Games:
-- [TicTacToe](/src/main/scala/games/TicTacToe)
+- [TicTacToe](./TicTacToe.md)
 - Hangman (coming soon!)
