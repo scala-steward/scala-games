@@ -64,3 +64,4 @@ class TicTacToeSpec extends Specification {
     Text.nextMove(square),
     Text.validInputs
   )
+}

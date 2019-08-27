@@ -8,6 +8,7 @@ class RowCoordinateSpec extends Specification {
   "Encoding/Decoder" >> {
     encoderDecoderParity[RowCoordinate](NonEmptyList.fromListUnsafe(
       List(Row1, Row2, Row3).zip(
-        List("1",  "2",  "3"))
+        List("1", "2", "3"))
     ))
   }
+}

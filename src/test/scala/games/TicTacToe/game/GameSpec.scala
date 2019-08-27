@@ -16,8 +16,8 @@ class GameSpec extends Specification {
         Row(None,    None,    None   ),
         Row(Some(O), Some(O), Some(O)))).zip(List(
         "X X X\n" ++
-          ". . .\n" ++
-          "O O O"
+        ". . .\n" ++
+        "O O O"
       ))
     ))
   }
