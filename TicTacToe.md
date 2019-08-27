@@ -87,37 +87,37 @@ The winning case is a bit more involved. It requires us to test if either one of
 def winner(game: Game): Option[Square] = {
   import game._
 
-	def winnerRow(row: Row): Option[Square] = row match {
-	    case Row(Some(X), Some(X), Some(X)) => Some(X)
-	    case Row(Some(O), Some(O), Some(O)) => Some(O)
-	    case _ => None
-	  }
-	 
-	def winnerColumn(colNr: Int): Option[Square] = if(colNr > 0 && colNr < 4) {
-	    winnerRow(colNr match {
-	      case 1 => Row(row1.col1, row2.col1, row3.col1)
-	      case 2 => Row(row1.col2, row2.col2, row3.col2)
-	      case 3 => Row(row1.col3, row2.col3, row3.col3)
-	    })
-	  } else {
-	    None
-	  }
+  def winnerRow(row: Row): Option[Square] = row match {
+    case Row(Some(X), Some(X), Some(X)) => Some(X)
+    case Row(Some(O), Some(O), Some(O)) => Some(O)
+    case _ => None
+  }
+ 
+  def winnerColumn(colNr: Int): Option[Square] = if(colNr > 0 && colNr < 4) {
+    winnerRow(colNr match {
+      case 1 => Row(row1.col1, row2.col1, row3.col1)
+      case 2 => Row(row1.col2, row2.col2, row3.col2)
+      case 3 => Row(row1.col3, row2.col3, row3.col3)
+    })
+  } else {
+    None
+  }
 
-	lazy val diagonalWinner = (row1, row2, row3) match {
-	  case (Row(Some(X), _, _), 
-        Row(_, Some(X), _), 
-        Row(_, _, Some(X))) => Some(X)
-	  case (Row(Some(O), _, _), 
-        Row(_, Some(O), _), 
-        Row(_, _, Some(O))) => Some(O)
-      case (Row(_, _, Some(X)), 
-        Row(_, Some(X), _), 
-        Row(Some(X), _, _)) => Some(X)
-	  case (Row(_, _, Some(O)), 
-	    Row(_, Some(O), _), 
-	    Row(Some(O), _, _)) => Some(O)
-	  case _ => None
-	}
+  lazy val diagonalWinner = (row1, row2, row3) match {
+    case (Row(Some(X), _, _), 
+      Row(_, Some(X), _), 
+      Row(_, _, Some(X))) => Some(X)
+    case (Row(Some(O), _, _), 
+      Row(_, Some(O), _), 
+      Row(_, _, Some(O))) => Some(O)
+    case (Row(_, _, Some(X)), 
+      Row(_, Some(X), _), 
+      Row(Some(X), _, _)) => Some(X)
+    case (Row(_, _, Some(O)), 
+      Row(_, Some(O), _), 
+      Row(Some(O), _, _)) => Some(O)
+    case _ => None
+  }
 
     winnerRow(row1) <+>
     winnerRow(row2) <+>
