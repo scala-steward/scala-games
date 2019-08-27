@@ -62,16 +62,13 @@ def move(game: Game, move: Move): Option[Game] = {
     case Coordinate(Col1, Row1) if row1.col1.isEmpty => Some(copy(row1 = row1.copy(col1 = Some(move.square))))
     case Coordinate(Col2, Row1) if row1.col2.isEmpty => Some(copy(row1 = row1.copy(col2 = Some(move.square))))
     case Coordinate(Col3, Row1) if row1.col3.isEmpty => Some(copy(row1 = row1.copy(col3 = Some(move.square))))
-
-		case Coordinate(Col1, Row2) if row2.col1.isEmpty => Some(copy(row2 = row2.copy(col1 = Some(move.square))))
-		    case Coordinate(Col2, Row2) if row2.col2.isEmpty => Some(copy(row2 = row2.copy(col2 = Some(move.square))))
-		    case Coordinate(Col3, Row2) if row2.col3.isEmpty => Some(copy(row2 = row2.copy(col3 = Some(move.square))))
-
-		case Coordinate(Col1, Row3) if row3.col1.isEmpty => Some(copy(row3 = row3.copy(col1 = Some(move.square))))
-		    case Coordinate(Col2, Row3) if row3.col2.isEmpty => Some(copy(row3 = row3.copy(col2 = Some(move.square))))
-		    case Coordinate(Col3, Row3) if row3.col3.isEmpty => Some(copy(row3 = row3.copy(col3 = Some(move.square))))
-
-		case _ => None
+    case Coordinate(Col1, Row2) if row2.col1.isEmpty => Some(copy(row2 = row2.copy(col1 = Some(move.square))))
+    case Coordinate(Col2, Row2) if row2.col2.isEmpty => Some(copy(row2 = row2.copy(col2 = Some(move.square))))
+    case Coordinate(Col3, Row2) if row2.col3.isEmpty => Some(copy(row2 = row2.copy(col3 = Some(move.square))))
+    case Coordinate(Col1, Row3) if row3.col1.isEmpty => Some(copy(row3 = row3.copy(col1 = Some(move.square))))
+    case Coordinate(Col2, Row3) if row3.col2.isEmpty => Some(copy(row3 = row3.copy(col2 = Some(move.square))))
+    case Coordinate(Col3, Row3) if row3.col3.isEmpty => Some(copy(row3 = row3.copy(col3 = Some(move.square))))
+    case _ => None
   }
 }
 ```
@@ -108,18 +105,17 @@ def winner(game: Game): Option[Square] = {
 
 	lazy val diagonalWinner = (row1, row2, row3) match {
 	  case (Row(Some(X), _, _), 
-	        Row(_, Some(X), _), 
-	        Row(_, _, Some(X))) => Some(X)
+        Row(_, Some(X), _), 
+        Row(_, _, Some(X))) => Some(X)
 	  case (Row(Some(O), _, _), 
-	        Row(_, Some(O), _), 
-	        Row(_, _, Some(O))) => Some(O)
-
-	case (Row(_, _, Some(X)), 
-	        Row(_, Some(X), _), 
-	        Row(Some(X), _, _)) => Some(X)
+        Row(_, Some(O), _), 
+        Row(_, _, Some(O))) => Some(O)
+      case (Row(_, _, Some(X)), 
+        Row(_, Some(X), _), 
+        Row(Some(X), _, _)) => Some(X)
 	  case (Row(_, _, Some(O)), 
-	        Row(_, Some(O), _), 
-	        Row(Some(O), _, _)) => Some(O)
+	    Row(_, Some(O), _), 
+	    Row(Some(O), _, _)) => Some(O)
 	  case _ => None
 	}
 
