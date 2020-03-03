@@ -28,4 +28,4 @@ libraryDependencies += "org.specs2" %% "specs2-scalacheck" % "4.6.0" % "test"
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.0" % "test"
 
 
-addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3")
+addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.10")
