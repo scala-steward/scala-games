@@ -18,11 +18,11 @@ scalacOptions ++= Seq(
   "-Yrangepos"
 )
 
-libraryDependencies += "org.typelevel" %% "cats-core" % "1.6.1"
+libraryDependencies += "org.typelevel" %% "cats-core" % "2.1.1"
 libraryDependencies += "org.typelevel" %% "cats-effect" % "1.4.0"
-libraryDependencies += "com.softwaremill.sttp" %% "core" % "1.6.8"
+libraryDependencies += "com.softwaremill.sttp" %% "core" % "1.7.2"
 libraryDependencies += "org.specs2" %% "specs2-core" % "4.9.3" % "test"
 libraryDependencies += "org.specs2" %% "specs2-scalacheck" % "4.9.3" % "test"
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.3" % "test"
 
-addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.10")
+addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.10.0")
