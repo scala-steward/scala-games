@@ -3,8 +3,8 @@ package games.Hangman
 import cats.data.NonEmptyList
 import games.Hangman.DifficultyLevel._
 import games.Hangman.State.Word
-import games.typeClasses.{Decoder, Encoder}
 import games.typeClasses.Encoder._
+import games.typeClasses.{Decoder, Encoder}
 
 sealed trait Input
 

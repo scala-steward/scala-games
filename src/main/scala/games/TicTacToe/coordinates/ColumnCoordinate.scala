@@ -1,11 +1,13 @@
 package games.TicTacToe.coordinates
 
-import games.typeClasses.{Encoder, Decoder}
+import games.typeClasses.{Decoder, Encoder}
 
 sealed trait ColumnCoordinate
 
 case object Col1 extends ColumnCoordinate
+
 case object Col2 extends ColumnCoordinate
+
 case object Col3 extends ColumnCoordinate
 
 object ColumnCoordinate {

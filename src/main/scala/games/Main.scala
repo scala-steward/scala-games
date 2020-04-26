@@ -44,8 +44,8 @@ object Main extends IOApp {
       _ <- ioInstance.printLine("Available options: TicTacToe, HangMan")
       name <- ioInstance.readLine
       exit <- name match {
-        case "ticTacToe" => ticTacToe
-        case "hangMan"   => hangman(ApiWordService)
+        case "TicTacToe" => ticTacToe
+        case "HangMan"   => hangman(ApiWordService)
         case _           => IO(ExitCode.Success)
       }
     } yield exit

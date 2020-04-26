@@ -1,7 +1,7 @@
 package games.Hangman
 
-import games.typeClasses.{Decoder, Encoder}
 import games.typeClasses.Encoder._
+import games.typeClasses.{Decoder, Encoder}
 
 sealed trait DifficultyLevel {
   def lives: Lives
