@@ -1,13 +1,14 @@
 package games.TicTacToe
 
-import games.typeClasses.{Decoder, Encoder}
 import games.typeClasses.Encoder._
+import games.typeClasses.{Decoder, Encoder}
 
 sealed trait Square {
   def asSquare: Square = this
 }
 
 object X extends Square
+
 object O extends Square
 
 object Square {
@@ -25,19 +26,23 @@ object Square {
     case O => X
   }
 
-  implicit val squareEncoder: Encoder[Square] = (value: Square) => toSymbol(value).toString
+  implicit val squareEncoder: Encoder[Square] = (value: Square) =>
+    toSymbol(value).toString
 
-  implicit val squareDecoder: Decoder[Square] = (value: String) => value.headOption.flatMap {
-    case Square.x => Some(X)
-    case Square.o => Some(O)
-    case _ => None
+  implicit val squareDecoder: Decoder[Square] = (value: String) =>
+    value.headOption.flatMap {
+      case Square.x => Some(X)
+      case Square.o => Some(O)
+      case _        => None
   }
 
-  implicit val squareOptEncoder: Encoder[Option[Square]] = (t: Option[Square]) => t.map(_.encode).getOrElse(empty.toString)
+  implicit val squareOptEncoder: Encoder[Option[Square]] =
+    (t: Option[Square]) => t.map(_.encode).getOrElse(empty.toString)
 
   implicit val squareOptDecoder: Decoder[Option[Square]] = (value: String) => {
     value.headOption.flatMap {
-      case Square.x | Square.o | Square.empty => Some(Decoder[Square].decode(value))
+      case Square.x | Square.o | Square.empty =>
+        Some(Decoder[Square].decode(value))
       case _ => None
     }
   }
