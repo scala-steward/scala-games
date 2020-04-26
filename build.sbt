@@ -1,6 +1,6 @@
 
 name := "scala-games"
-version := "0.0.1-SNAPSHOT"
+version := "0.0.1"
 
 resolvers += "Artima Maven Repository" at "http://repo.artima.com/releases"
 
