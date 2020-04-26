@@ -2,12 +2,12 @@ package games.Hangman
 
 import cats.data.Ior.Both
 import cats.data.{Ior, NonEmptyList, NonEmptySet}
-import games.typeClasses.Encoder
-import games.typeClasses.Encoder._
-import cats.instances.string._
 import cats.instances.char._
+import cats.instances.string._
 import cats.syntax.ior._
 import games.Hangman.State.{Guesses, Word}
+import games.typeClasses.Encoder
+import games.typeClasses.Encoder._
 
 sealed trait State
 
@@ -25,14 +25,47 @@ case class Lose(word: Word, guesses: Guesses) extends State
 object State {
   type Word = NonEmptyList[Char]
   type Guesses = NonEmptySet[Char] Ior NonEmptySet[NonEmptyList[Char]]
+  val emptyGameScene: Vector[Vector[String]] = {
+    val game =
+      """
+        |_________
+        |/
+        |
+        |
+        |
+        |
+        |
+        |_________"""
+        .split("\n")
+        .drop(1)
+        .toVector
+        .map(_.dropWhile(_ != '|').split("").toVector)
+
+    val maxLength = game.map(_.length).max
+
+    game.map(line =>
+      if (maxLength == line.length) line else line.padTo(maxLength, " "))
+  }
+  val emptyGame: String = emptyGameScene.map(_.mkString("")).mkString("\n")
+  val info: String = List(
+    "Available options:",
+    List[Input](
+      ExitGame,
+      Restart(Easy),
+      Restart(Medium),
+      Restart(Hard)
+    ).map(_.encode).mkString("\n"),
+  ).mkString("\n")
 
   def wordChoice(wordChoice: Word): Guesses =
     NonEmptySet.of(wordChoice).rightIor
+
   def symbolChoice(symbolChoice: Char): Guesses =
     NonEmptySet.of(symbolChoice).leftIor
 
   def symbolChoices(symbolChoices: NonEmptyList[Char]): Guesses =
     symbolChoices.toNes.leftIor
+
   def wordChoices(symbolChoices: NonEmptyList[Word]): Guesses =
     symbolChoices.toNes.rightIor
 
@@ -41,36 +74,6 @@ object State {
     case Ior.Right(words)     => Ior.both(NonEmptySet.of(guess), words)
     case Both(symbols, words) => Ior.both(symbols.add(guess), words)
   }
-
-  def addWordGuess(choices: Guesses, guess: NonEmptyList[Char]): Guesses =
-    choices match {
-      case Ior.Left(symbols)    => Ior.both(symbols, NonEmptySet.of(guess))
-      case Ior.Right(words)     => words.add(guess).rightIor
-      case Both(symbols, words) => Ior.both(symbols, words.add(guess))
-    }
-
-  val emptyGameScene: Vector[Vector[String]] = {
-    val game = """
-                 |_________
-                 |/
-                 |
-                 |
-                 |
-                 |
-                 |
-                 |_________"""
-      .split("\n")
-      .drop(1)
-      .toVector
-      .map(_.dropWhile(_ != '|').split("").toVector)
-
-    val maxLength = game.map(_.length).max
-
-    game.map(line =>
-      if (maxLength == line.length) line else line.padTo(maxLength, " "))
-  }
-
-  val emptyGame: String = emptyGameScene.map(_.mkString("")).mkString("\n")
 
   implicit val lifeEncoder: Encoder[Lives] = new Encoder[Lives] {
 
@@ -100,6 +103,13 @@ object State {
         .mkString("\n")
   }
 
+  def addWordGuess(choices: Guesses, guess: NonEmptyList[Char]): Guesses =
+    choices match {
+      case Ior.Left(symbols)    => Ior.both(symbols, NonEmptySet.of(guess))
+      case Ior.Right(words)     => words.add(guess).rightIor
+      case Both(symbols, words) => Ior.both(symbols, words.add(guess))
+    }
+
   def guessesToStr(guesses: Guesses): String =
     guesses
       .leftMap(_.map(NonEmptyList.of(_)))
@@ -107,16 +117,6 @@ object State {
       .map(_.toList.mkString(""))
       .toSortedSet
       .mkString(", ")
-
-  val info: String = List(
-    "Available options:",
-    List[Input](
-      ExitGame,
-      Restart(Easy),
-      Restart(Medium),
-      Restart(Hard)
-    ).map(_.encode).mkString("\n"),
-  ).mkString("\n")
 
   implicit val stateEncoder: Encoder[State] = {
     case Init => info
