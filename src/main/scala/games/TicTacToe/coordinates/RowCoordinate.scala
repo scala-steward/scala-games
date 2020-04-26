@@ -5,7 +5,9 @@ import games.typeClasses.{Decoder, Encoder}
 sealed trait RowCoordinate
 
 case object Row1 extends RowCoordinate
+
 case object Row2 extends RowCoordinate
+
 case object Row3 extends RowCoordinate
 
 object RowCoordinate {
