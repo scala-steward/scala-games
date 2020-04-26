@@ -25,4 +25,4 @@ libraryDependencies += "org.specs2" %% "specs2-core" % "4.9.3" % "test"
 libraryDependencies += "org.specs2" %% "specs2-scalacheck" % "4.9.3" % "test"
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.3" % "test"
 
-addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.10.0")
+addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.10.3")
