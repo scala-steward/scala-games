@@ -5,24 +5,24 @@ import org.specs2.mutable.Specification
 import games.TestCase
 import games.TestCase._
 import games.TicTacToe.coordinates.CoordinateSpec._
-import games.TicTacToe.game.GameSpec.buildGameUnsafe
+//import games.TicTacToe.game.GameSpec.buildGameUnsafe
 import games.TicTacToe.game.{Game, Move}
 
 class TicTacToeSpec extends Specification {
-  "Display Game in Console format" >> {
-    displayGameOnConsole(
-      buildGameUnsafe(
-        "X O O",
-        "O X X",
-        ". . ."
-      )
-    ) must_=== Seq(
-      "  A B C",
-      "1 X O O",
-      "2 O X X",
-      "3 . . ."
-    ).mkString("\n")
-  }
+//  "Display Game in Console format" >> {
+//    displayGameOnConsole(
+//      buildGameUnsafe(
+//        "X O O",
+//        "O X X",
+//        ". . ."
+//      )
+//    ) must_=== Seq(
+//      "  A B C",
+//      "1 X O O",
+//      "2 O X X",
+//      "3 . . ."
+//    ).mkString("\n")
+//  }
 
   "Playing a winning game" >> {
     run[TestState].run(TestCase(
