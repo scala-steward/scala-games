@@ -23,8 +23,8 @@ object Row {
     if (value.length == 5) {
       Applicative[Option].map3(
         Decoder[Option[Square]].decode(value.charAt(0).toString),
-        Decoder[Option[Square]].decode(value.charAt(1).toString),
-        Decoder[Option[Square]].decode(value.charAt(2).toString)
+        Decoder[Option[Square]].decode(value.charAt(2).toString),
+        Decoder[Option[Square]].decode(value.charAt(4).toString)
       )(Row(_, _, _))
     } else {
       None

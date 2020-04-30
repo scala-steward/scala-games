@@ -9,27 +9,35 @@ import games.typeClasses.Console
 case class TestCase(inputs: Seq[String], outputs: Seq[String])
 
 object TestCase {
-  val completedProgram: (TestCase, ExitCode) = (TestCase(Seq.empty, Seq.empty), ExitCode.Success)
+  val completedProgram: (TestCase, ExitCode) =
+    (TestCase(Seq.empty, Seq.empty), ExitCode.Success)
 
   type TestState[A] = StateT[Either[String, ?], TestCase, A]
 
-  def testState[A](fn: TestCase => Either[String, (TestCase, A)]): StateT[Either[String, ?], TestCase, A] = StateT[Either[String, ?], TestCase, A](fn)
+  def testState[A](fn: TestCase => Either[String, (TestCase, A)])
+    : StateT[Either[String, ?], TestCase, A] =
+    StateT[Either[String, ?], TestCase, A](fn)
 
   implicit val stateInstance: Console[TestState] = new Console[TestState] {
-    override def readLine: TestState[String] = testState(state => {
-      state.inputs.headOption.toRight("No matching input left").flatMap(firstInput =>
-        (TestCase(state.inputs.tail, state.outputs), firstInput).asRight
-      )
-    })
-
-    override def printLine(text: String): TestState[Unit] = testState(state => {
-      state.outputs.headOption.toRight("No matching output left").flatMap(firstOutput => {
-        if (firstOutput == text) {
-          (TestCase(state.inputs, state.outputs.tail), ()).asRight
-        } else {
-          s"Output is not valid: expected '$firstOutput' actual '$text'".asLeft
-        }
+    override def readLine: TestState[String] =
+      testState(state => {
+        state.inputs.headOption
+          .toRight("No matching input left")
+          .flatMap(firstInput =>
+            (TestCase(state.inputs.tail, state.outputs), firstInput).asRight)
       })
-    })
+
+    override def printLine(text: String): TestState[Unit] =
+      testState(state => {
+        state.outputs.headOption
+          .toRight("No matching output left")
+          .flatMap(firstOutput => {
+            if (firstOutput == text) {
+              (TestCase(state.inputs, state.outputs.tail), ()).asRight
+            } else {
+              s"Output is not valid: expected '$firstOutput' actual '$text'".asLeft
+            }
+          })
+      })
   }
 }
