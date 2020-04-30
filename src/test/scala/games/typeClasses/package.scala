@@ -1,14 +1,12 @@
 package games
 
-import java.io
-
 import cats.data.NonEmptyList
 import org.specs2.matcher.MatchResult
 import org.specs2.mutable.Specification
 
 package object typeClasses extends Specification {
   def encoderDecoderParity[T: Encoder: Decoder](
-      values: NonEmptyList[(T, String)]): MatchResult[io.Serializable] = {
+      values: NonEmptyList[(T, String)]) = {
     values
       .map(_._1)
       .map(DecoderLaws.reflectiveToEncoder[T](_))

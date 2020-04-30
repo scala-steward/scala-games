@@ -1,6 +1,8 @@
 package games.TicTacToe
 
 import cats.Applicative
+import games.typeClasses.{Decoder, Encoder}
+import games.typeClasses.Encoder._
 import cats.instances.option._
 import cats.syntax.semigroupk._
 import games.TicTacToe.coordinates.{
@@ -12,16 +14,8 @@ import games.TicTacToe.coordinates.{
   Row2,
   Row3
 }
-import games.typeClasses.Encoder._
-import games.typeClasses.{Decoder, Encoder}
 
 package object game {
-  val empty = Game(
-    Row(None, None, None),
-    Row(None, None, None),
-    Row(None, None, None)
-  )
-
   def full(game: Game): Boolean =
     Seq(game.row1, game.row2, game.row3).forall(Row.full)
 
@@ -94,6 +88,12 @@ package object game {
       case _ => None
     }
   }
+
+  val empty = Game(
+    Row(None, None, None),
+    Row(None, None, None),
+    Row(None, None, None)
+  )
 
   implicit val gameDecoder: Decoder[Game] = (value: String) => {
     val lines = value.split('\n')
