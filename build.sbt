@@ -19,7 +19,7 @@ scalacOptions ++= Seq(
 )
 
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.1.1"
-libraryDependencies += "org.typelevel" %% "cats-effect" % "2.1.3"
+libraryDependencies += "org.typelevel" %% "cats-effect" % "2.1.4"
 libraryDependencies += "com.softwaremill.sttp" %% "core" % "1.7.2"
 libraryDependencies += "org.specs2" %% "specs2-core" % "4.10.0" % "test"
 libraryDependencies += "org.specs2" %% "specs2-scalacheck" % "4.10.0" % "test"
