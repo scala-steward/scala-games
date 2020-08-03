@@ -21,8 +21,8 @@ scalacOptions ++= Seq(
 libraryDependencies += "org.typelevel" %% "cats-core" % "2.1.1"
 libraryDependencies += "org.typelevel" %% "cats-effect" % "2.1.4"
 libraryDependencies += "com.softwaremill.sttp" %% "core" % "1.7.2"
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.10.1" % "test"
-libraryDependencies += "org.specs2" %% "specs2-scalacheck" % "4.10.1" % "test"
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.10.2" % "test"
+libraryDependencies += "org.specs2" %% "specs2-scalacheck" % "4.10.2" % "test"
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.3" % "test"
 
 addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.10.3")
