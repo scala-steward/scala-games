@@ -18,7 +18,7 @@ scalacOptions ++= Seq(
   "-Yrangepos"
 )
 
-libraryDependencies += "org.typelevel" %% "cats-core" % "2.3.0"
+libraryDependencies += "org.typelevel" %% "cats-core" % "2.3.1"
 libraryDependencies += "org.typelevel" %% "cats-effect" % "2.3.0"
 libraryDependencies += "com.softwaremill.sttp" %% "core" % "1.7.2"
 libraryDependencies += "org.specs2" %% "specs2-core" % "4.10.5" % "test"
